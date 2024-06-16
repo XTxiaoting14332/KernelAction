@@ -16,9 +16,6 @@ jobs:
           df -h
 
 
-      - name: Setup SSH
-        uses: csexton/debugger-action@master
-
 
       - name: Install Dependencies
         run: |
