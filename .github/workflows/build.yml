@@ -14,7 +14,6 @@ jobs:
         run: |
           apt update
           apt install -y wget zstd xz-utils make gcc flex cmake libssl-dev aria2 build-essential libelf-dev
-          apt build-dep -y linux
       
       - name: Download kernel package
         run: |
