@@ -7,22 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     container: debian:buster
     steps:
-      - name: Install sudo
-        run: |
-          apt update
-          apt install -y sudo procps
-
-
-      - name: Maximize build space
-        uses: XTxiaoting14332/maximize-build-space@master
-        with:
-          remove-dotnet: 'true'
-
-      - name: Build
-        run: |
-          echo "Free space:"
-          df -h
-
       - name: Checkout
         uses: actions/checkout@v3
 
