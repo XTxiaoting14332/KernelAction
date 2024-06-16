@@ -1,0 +1,56 @@
+name: Build kernel
+on: push
+
+jobs:
+  build:
+    name: Build kernel
+    runs-on: ubuntu-latest
+    container: debian:buster
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          apt update
+          apt install -y wget zstd xz-utils make gcc flex cmake libssl-dev aria2 build-essential libelf-dev
+          apt build-dep -y linux
+      
+      - name: Download kernel package
+        run: |
+          kernelVersion = $(cat version.txt)
+          echo "VERSION=$kernelVersion" >> $GITHUB_ENV
+          aria2c https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-${{ env.VERSION }}.tar.xz
+
+      - name: Unzip Kernel
+        run: |
+          mv *.tar.xz kernel.tar.xz
+          tar -xf kernel.tar.xz
+
+      - name: build
+        run: |
+          cd linux-${{ env.VERSION }}/
+          cp ../config .config
+          scripts/config --disable DEBUG_INFO
+          scripts/config --disable SYSTEM_TRUSTED_KEYS
+          scripts/config --disable SYSTEM_REVOCATION_KEYS
+          patch -Np1 < ../cjktty/cjktty-6.7.patch
+          make -j$(nproc) CONFIG_FILE=../config
+          make modules
+          mkdir ../done
+          cp ./* ../done/
+          cd ..
+          tar zcf kernel.tar.gz done/
+          mv kernel.tar.gz artifact/
+
+
+          
+
+
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: ${{ github.workspace }}/artifact/
+
+
