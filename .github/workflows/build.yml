@@ -13,7 +13,7 @@ jobs:
       - name: Install Dependencies
         run: |
           apt update
-          apt install -y wget zstd xz-utils make gcc flex cmake libssl-dev aria2 build-essential libelf-dev
+          apt install -y zstd xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev aria2 build-essential libelf-dev
       
       - name: Download kernel package
         run: |
