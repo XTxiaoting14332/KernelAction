@@ -17,9 +17,7 @@ jobs:
       
       - name: Download kernel package
         run: |
-          kernelVersion = $(cat version.txt)
-          echo "VERSION=$kernelVersion" >> $GITHUB_ENV
-          aria2c https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-${{ env.VERSION }}.tar.xz
+          aria2c https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-6.7.tar.xz
 
       - name: Unzip Kernel
         run: |
@@ -28,7 +26,7 @@ jobs:
 
       - name: build
         run: |
-          cd linux-${{ env.VERSION }}/
+          cd linux-6.7/
           cp ../config .config
           scripts/config --disable DEBUG_INFO
           scripts/config --disable SYSTEM_TRUSTED_KEYS
