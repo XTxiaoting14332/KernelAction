@@ -10,7 +10,7 @@ jobs:
       - name: Install sudo
         run: |
           apt update
-          apt install -y sudo
+          apt install -y sudo free 
 
 
       - name: Maximize build space
