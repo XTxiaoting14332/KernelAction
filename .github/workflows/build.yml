@@ -7,6 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     container: debian:buster
     steps:
+      - name: Install sudo
+        run: |
+          apt update
+          apt install -y sudo
+
+
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -30,7 +36,7 @@ jobs:
 
       - name: Setup SSH
         uses: csexton/debugger-action@master
-        
+
 
       - name: Install Dependencies
         run: |
