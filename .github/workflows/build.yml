@@ -14,7 +14,7 @@ jobs:
 
 
       - name: Maximize build space
-        uses: easimon/maximize-build-space@master
+        uses: XTxiaoting14332/maximize-build-space@master
         with:
           remove-dotnet: 'true'
 
